@@ -25,17 +25,20 @@ export class AuthGoogleController {
   googleRegisterRedirect(@Req() req: any) {
     console.log(req.user)
     return this.authGoogleService.googleRegister(req)
+    // registration from google account
   }
 
   @Get('/login')
   @UseGuards(AuthGuard('google_login'))
   googleLoginRedirect(@Req() req:any){
     return this.authGoogleService.googleLogin(req)
+    // login from google account
   }
 
   @Get('/getUsers')
   adminGet(@Headers() headers: any){
     return this.authGoogleService.getAdmin(headers)
+    // this will be deleted
   }
 
   

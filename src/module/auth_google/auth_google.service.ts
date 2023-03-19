@@ -7,19 +7,21 @@ import { TokenMiddleware } from 'src/middleWare/token.middleware';
 @Injectable()
 export class AuthGoogleService {
   constructor(
-    private readonly jwtservice: JwtService,
-    private readonly tokenmiddleware: TokenMiddleware
+    private readonly jwtservice: JwtService, //jwt service
+    private readonly tokenmiddleware: TokenMiddleware // token middleware for checking user & admin
   ){}
 
 
   async googleRegister(req:any): Promise<string| any> {
     const user = req.user
+    //req.user data
 
     if(!user) {
       return 'No user from google'
     }
 
     const findUser = await UsersEntity.findOneBy({password: user.password, email: req.email})
+    //checking user existance
     if(findUser){
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST)
     }
@@ -30,14 +32,16 @@ export class AuthGoogleService {
     .values({name: user.firstName, password: user.password, email: user.email})
     .returning(['user_email', 'user_password', 'user_name'])
     .execute()
+    // query
 
     console.log(raw);
     return this.jwtservice.sign({
         id: raw.id, 
         email: raw.email
       }, {
-        secret: process.env.SECRET_KEY
-      })
+      secret: process.env.SECRET_KEY
+    })
+    //sign data
   }
 
   async googleLogin(req: any): Promise<string | any>{
@@ -54,15 +58,18 @@ export class AuthGoogleService {
     return this.jwtservice.sign({
         id: findUser.id, 
         email: findUser.email
-      },{
+      }, {
         secret: process.env.SECRET_KEY
-      })
+    })
+       //sign data
   }
 
   async getAdmin(headers: any): Promise<UsersEntity[]>{
-    this.tokenmiddleware.verifyAdmin(headers) //checking admin token
+    this.tokenmiddleware.verifyAdmin(headers)
+    //checking admin token
     
-    const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password) // deleting users passwords
+    const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password)
+    // deleting users passwords
     return findAllUser
   }
 
