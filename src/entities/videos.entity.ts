@@ -51,9 +51,13 @@ export class VideosEntity extends BaseEntity {
   @JoinColumn({ name: 'video_course' })
   course: CategoryEntity;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    select: false,
+  })
   create_date: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    select: false,
+  })
   update_date: Date;
 }

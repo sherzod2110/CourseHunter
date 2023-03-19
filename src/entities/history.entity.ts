@@ -27,9 +27,13 @@ export class HistoryEntity extends BaseEntity {
   @JoinColumn({ name: 'history_user' })
   history_user: UsersEntity;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    select: false,
+  })
   create_date: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    select: false,
+  })
   update_date: Date;
 }

@@ -42,9 +42,13 @@ export class UsersEntity extends BaseEntity {
   @OneToMany(() => HistoryEntity, (history) => history.history_user)
   user_history: HistoryEntity[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    select: false,
+  })
   create_date: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    select: false,
+  })
   update_date: Date;
 }
