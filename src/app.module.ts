@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { config } from './config';
 import { TakeModule } from './module/take/take.module';
 import { CategoriesModule } from './module/categories/categories.module';
+import { AuthGoogleModule } from './module/auth_google/auth_google.module';
 dotenv.config();
 
 @Module({
@@ -13,7 +14,8 @@ dotenv.config();
     ConfigModule.forRoot(config),
     TypeOrmModule.forRoot(connectDb),
     TakeModule,
-    CategoriesModule
+    CategoriesModule,
+    AuthGoogleModule
   ],
 })
 export class AppModule {}
