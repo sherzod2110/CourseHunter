@@ -3,7 +3,9 @@ import { AuthGoogleService } from './auth_google.service';
 import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
 import { GoogleGuard } from './guards/google.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth-google')
 @Controller('auth-google')
 export class AuthGoogleController {
   constructor(private readonly authGoogleService: AuthGoogleService) {}
