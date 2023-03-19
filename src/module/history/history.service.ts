@@ -23,7 +23,9 @@ export class HistoryService {
 
     return await UsersEntity.find({
       relations: {
-        user_history: true,
+        user_history: {
+          history_course: true,
+        },
       },
       where: {
         id: findUser.id,
