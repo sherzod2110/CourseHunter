@@ -4,6 +4,6 @@ import { TakeController } from './take.controller';
 
 @Module({
   controllers: [TakeController],
-  providers: [TakeService]
+  providers: [TakeService],
 })
 export class TakeModule {}
