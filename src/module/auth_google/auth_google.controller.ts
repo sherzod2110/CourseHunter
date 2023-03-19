@@ -11,18 +11,15 @@ export class AuthGoogleController {
   
   @UseGuards(GoogleGuard)
   @Get()
-  async get(): Promise<any> {} 
+  async get(@Req() req:any): Promise<any> {} 
 
   @UseGuards(GoogleGuard)
   @Get('/callback')
-  googleAuthRedirect(@Req() req: any): any {
-      return this.authGoogleService.googleLogin(req)
+  googleAuthRedirect(@Req() req: any) {
+    console.log(req.user)
+    return this.authGoogleService.googleRegister(req)
   }
   
-  @Post()
-  create(@Body() createAuthGoogleDto: CreateAuthGoogleDto) {
-    return this.authGoogleService.create(createAuthGoogleDto);
-  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthGoogleDto: UpdateAuthGoogleDto) {
     return this.authGoogleService.update(+id, updateAuthGoogleDto);

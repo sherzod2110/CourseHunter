@@ -1,18 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
+import { UsersEntity } from 'src/entities/users.entity';
 
 @Injectable()
 export class AuthGoogleService {
-  create(createAuthGoogleDto: CreateAuthGoogleDto) {
-    return 'This action adds a new authGoogle';
-  }
+  constructor(){}
 
-  googleLogin(req:any) {
-      if(!req.user){
-        return 'No user from google'
-      }
-      return req.user
+
+
+  async googleRegister(req:any): Promise<string> {
+    const user = req.user
+
+    if(!user){
+      return 'No user from google'
+    }
+    const userBody = {
+      password: user.password,
+      email: user.email
+    }
+
+    const findUser = await UsersEntity.findOneBy(userBody)
+
+    if(findUser){
+      throw new HttpException('user already exists', HttpStatus.BAD_REQUEST)
+    }
+
+    const createUser = await UsersEntity.createQueryBuilder()
+    .insert()
+    .into(UsersEntity)
+    .values(userBody)
+    .execute()
+
+    return req.user
   }
 
   findOne(id: number) {
