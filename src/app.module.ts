@@ -15,7 +15,7 @@ dotenv.config();
     TypeOrmModule.forRoot(connectDb),
     TakeModule,
     CategoriesModule,
-    AuthGoogleModule
+    AuthGoogleModule,
   ],
 })
 export class AppModule {}
