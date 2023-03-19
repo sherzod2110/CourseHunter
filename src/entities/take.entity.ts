@@ -43,9 +43,7 @@ export class TakeEntity extends BaseEntity {
   @JoinColumn({ name: 'take_user' })
   take_user: UsersEntity;
 
-  @CreateDateColumn({
-    select: false,
-  })
+  @CreateDateColumn()
   create_date: Date;
 
   @UpdateDateColumn({
