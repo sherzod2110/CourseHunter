@@ -74,10 +74,12 @@ export class TakeMiddleware implements NestMiddleware {
       .split(' ')
       .map((e) => Number(e));
     for (let i = 0; i < allTake.length; i++) {
-      const bazaCreate = this.date(allTake[i].create_date).split(' ');
-      const result = this.plus(bazaCreate, allTake[i].month);
+      if (allTake[i].active) {
+        const bazaCreate = this.date(allTake[i].create_date).split(' ');
+        const result = this.plus(bazaCreate, allTake[i].month);
 
-      this.taqoslash(result, today, allTake[i].id);
+        this.taqoslash(result, today, allTake[i].id);
+      }
     }
     next();
   }
