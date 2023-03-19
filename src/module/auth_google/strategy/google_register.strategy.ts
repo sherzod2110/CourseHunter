@@ -4,12 +4,12 @@ import {Strategy, VerifyCallback} from 'passport-google-oauth20'
 
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy){
+export class GoogleRegisterStrategy extends PassportStrategy(Strategy, 'google_register'){
     constructor(){
         super({
-            clientID: "810916055599-rhp4845pplkdfs8t58ve11lemfv3jfs4.apps.googleusercontent.com",
-            clientSecret: "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",
-            callbackURL: "http://localhost:3000/v1/auth-google/callback",
+            clientID: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET,
+            callbackURL: process.env.CALLBACK_REGISTER,
             scope: ['email', 'profile']
         })
     }

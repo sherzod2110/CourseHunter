@@ -11,8 +11,7 @@ export class AuthGoogleService {
   ){}
 
 
-
-  async googleRegister(req:any): Promise<string> {
+  async googleRegister(req:any): Promise<string| any> {
     const user = req.user
 
     if(!user){
@@ -36,9 +35,23 @@ export class AuthGoogleService {
     return this.jwtservice.sign({id: raw.id, email: raw.email}, {secret: process.env.SECRET_KEY})
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} authGoogle`;
+  async googleLogin(req: any): Promise<string | any>{
+    const user = req.user
+
+    if(!user){
+      return 'no user from google'
+    }
+    
+    const findUser = await UsersEntity.findOneBy({password: user.password, email: req.email})
+
+    if(!findUser){
+      throw new HttpException('user not found', HttpStatus.BAD_REQUEST)
+    }
+
+    return this.jwtservice.sign({id: findUser.id, email: findUser.email},{secret: process.env.SECRET_KEY})
   }
+
+
 
   update(id: number, updateAuthGoogleDto: UpdateAuthGoogleDto) {
     return `This action updates a #${id} authGoogle`;
