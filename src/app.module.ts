@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { config } from './config';
 import { TakeModule } from './module/take/take.module';
+import { CategoriesModule } from './module/categories/categories.module';
 dotenv.config();
 
 @Module({
@@ -12,6 +13,7 @@ dotenv.config();
     ConfigModule.forRoot(config),
     TypeOrmModule.forRoot(connectDb),
     TakeModule,
+    CategoriesModule
   ],
 })
 export class AppModule {}
