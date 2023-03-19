@@ -3,9 +3,9 @@ import { AuthGoogleService } from './auth_google.service';
 import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
 import { GoogleGuard } from './guards/google.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('auth-google')
+@ApiTags('Auth Google')
 @Controller('auth-google')
 export class AuthGoogleController {
   constructor(private readonly authGoogleService: AuthGoogleService) {}
@@ -15,6 +15,7 @@ export class AuthGoogleController {
   @Get()
   async get(@Req() req:any): Promise<any> {} 
 
+  @ApiBasicAuth()
   @UseGuards(GoogleGuard)
   @Get('/callback')
   googleAuthRedirect(@Req() req: any) {

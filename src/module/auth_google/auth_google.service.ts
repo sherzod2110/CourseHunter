@@ -18,12 +18,8 @@ export class AuthGoogleService {
     if(!user){
       return 'No user from google'
     }
-    const userBody = {
-      password: user.password,
-      email: user.email
-    }
 
-    const findUser = await UsersEntity.findOneBy(userBody)
+    const findUser = await UsersEntity.findOneBy({password: user.password, email: req.email})
 
     if(findUser){
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST)
@@ -32,12 +28,12 @@ export class AuthGoogleService {
     const {raw: [raw]} = await UsersEntity.createQueryBuilder()
     .insert()
     .into(UsersEntity)
-    .values(userBody)
-    .returning(['*'])
+    .values({name: user.firstName, password: user.password, email: user.email})
+    .returning(['user_email', 'user_password', 'user_name'])
     .execute()
 
     console.log(raw);
-    return this.jwtservice.sign({id: raw.id, email: raw.email})
+    return this.jwtservice.sign({id: raw.id, email: raw.email}, {secret: process.env.SECRET_KEY})
   }
 
   findOne(id: number) {
