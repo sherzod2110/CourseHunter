@@ -6,7 +6,8 @@ import {
   Param, 
   Body, 
   Get, 
-  Req 
+  Req, 
+  Headers
 } from '@nestjs/common';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
 import { AuthGoogleService } from './auth_google.service';
@@ -30,6 +31,11 @@ export class AuthGoogleController {
   @UseGuards(AuthGuard('google_login'))
   googleLoginRedirect(@Req() req:any){
     return this.authGoogleService.googleLogin(req)
+  }
+
+  @Get('/getUsers')
+  adminGet(@Headers() headers: any){
+    return this.authGoogleService.getAdmin(headers)
   }
 
   

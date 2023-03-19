@@ -8,9 +8,7 @@ import { TokenMiddleware } from 'src/middleWare/token.middleware';
 
 @Module({
   imports: [
-    JwtModule.register({
-      secret: process.env.SECRET_KEY
-    }),
+    JwtModule.register({secret: process.env.SECRET_KEY}),
   ],
   controllers: [AuthGoogleController],
   providers: [AuthGoogleService, GoogleRegisterStrategy, GoogleLoginStrategy, JwtService, TokenMiddleware]
