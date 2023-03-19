@@ -12,6 +12,7 @@ import { TakeService } from './take.service';
 import { CreateTakeDto } from './dto/create-take.dto';
 import {
   ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -34,9 +35,9 @@ export class TakeController {
 
   @Post('/create')
   @ApiBadRequestResponse()
-  @ApiOkResponse()
+  @ApiCreatedResponse()
   @ApiNotFoundResponse()
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() body: CreateTakeDto) {
     await this.takeService.create(body);
   }

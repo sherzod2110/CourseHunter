@@ -39,9 +39,13 @@ export class CategoryEntity extends BaseEntity {
   @OneToMany(() => CoursesEntity, (course) => course.course_cat)
   course: CoursesEntity[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    select: false,
+  })
   create_date: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    select: false,
+  })
   update_date: Date;
 }
