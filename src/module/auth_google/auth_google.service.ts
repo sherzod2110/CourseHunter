@@ -8,8 +8,11 @@ export class AuthGoogleService {
     return 'This action adds a new authGoogle';
   }
 
-  findAll() {
-    return `This action returns all authGoogle`;
+  googleLogin(req:any) {
+      if(!req.user){
+        return 'No user from google'
+      }
+      return req.user
   }
 
   findOne(id: number) {

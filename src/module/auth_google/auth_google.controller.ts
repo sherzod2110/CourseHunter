@@ -1,27 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { AuthGoogleService } from './auth_google.service';
 import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
+import { GoogleGuard } from './guards/google.guard';
 
 @Controller('auth-google')
 export class AuthGoogleController {
   constructor(private readonly authGoogleService: AuthGoogleService) {}
 
+  
+  @UseGuards(GoogleGuard)
+  @Get()
+  async get(): Promise<any> {} 
+
+  @UseGuards(GoogleGuard)
+  @Get('/callback')
+  googleAuthRedirect(@Req() req: any): any {
+      return this.authGoogleService.googleLogin(req)
+  }
+  
   @Post()
   create(@Body() createAuthGoogleDto: CreateAuthGoogleDto) {
     return this.authGoogleService.create(createAuthGoogleDto);
   }
-
-  @Get()
-  findAll() {
-    return this.authGoogleService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authGoogleService.findOne(+id);
-  }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthGoogleDto: UpdateAuthGoogleDto) {
     return this.authGoogleService.update(+id, updateAuthGoogleDto);
