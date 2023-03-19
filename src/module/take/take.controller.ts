@@ -3,40 +3,50 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { TakeService } from './take.service';
 import { CreateTakeDto } from './dto/create-take.dto';
-import { UpdateTakeDto } from './dto/update-take.dto';
+import {
+  ApiBadRequestResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller('take')
+@ApiTags('Take')
 export class TakeController {
   constructor(private readonly takeService: TakeService) {}
 
-  @Post()
-  create(@Body() createTakeDto: CreateTakeDto) {
-    return this.takeService.create(createTakeDto);
+  @Get('/all')
+  @ApiOkResponse()
+  @ApiNotFoundResponse()
+  @ApiBadRequestResponse()
+  @HttpCode(HttpStatus.OK)
+  async findAll() {
+    return await this.takeService.findAll();
   }
 
-  @Get()
-  findAll() {
-    return this.takeService.findAll();
+  @Post('/create')
+  @ApiBadRequestResponse()
+  @ApiOkResponse()
+  @ApiNotFoundResponse()
+  @HttpCode(HttpStatus.OK)
+  async create(@Body() body: CreateTakeDto) {
+    await this.takeService.create(body);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.takeService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTakeDto: UpdateTakeDto) {
-    return this.takeService.update(+id, updateTakeDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.takeService.remove(+id);
+  @Delete('/delete/:id')
+  @ApiBadRequestResponse()
+  @ApiNoContentResponse()
+  @ApiNotFoundResponse()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+    await this.takeService.remove(id);
   }
 }
