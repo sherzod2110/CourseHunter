@@ -1,11 +1,11 @@
 import { 
   Controller, 
-  Get, 
-  Body, 
+  UseGuards, 
+  Delete, 
   Patch, 
   Param, 
-  Delete, 
-  UseGuards, 
+  Body, 
+  Get, 
   Req 
 } from '@nestjs/common';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
@@ -19,15 +19,15 @@ export class AuthGoogleController {
   constructor(private readonly authGoogleService: AuthGoogleService) {}
 
 
-  @UseGuards(AuthGuard('google_register'))
   @Get('/register')
+  @UseGuards(AuthGuard('google_register'))
   googleRegisterRedirect(@Req() req: any) {
     console.log(req.user)
     return this.authGoogleService.googleRegister(req)
   }
 
-  @UseGuards(AuthGuard('google_login'))
   @Get('/login')
+  @UseGuards(AuthGuard('google_login'))
   googleLoginRedirect(@Req() req:any){
     return this.authGoogleService.googleLogin(req)
   }
