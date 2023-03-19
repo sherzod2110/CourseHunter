@@ -1,5 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
 import { UsersEntity } from 'src/entities/users.entity';
 import { JwtService } from '@nestjs/jwt';

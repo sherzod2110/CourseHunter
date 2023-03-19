@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
-import { AuthGoogleService } from './auth_google.service';
-import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
+import { 
+  Controller, 
+  Get, 
+  Body, 
+  Patch, 
+  Param, 
+  Delete, 
+  UseGuards, 
+  Req 
+} from '@nestjs/common';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { AuthGoogleService } from './auth_google.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Auth Google')
 @Controller('auth-google')
