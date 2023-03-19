@@ -1,5 +1,10 @@
 import * as dotenv from 'dotenv';
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { connectDb } from './ormconfig/typeorm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -7,6 +12,7 @@ import { config } from './config';
 import { TakeModule } from './module/take/take.module';
 import { CategoriesModule } from './module/categories/categories.module';
 import { AuthGoogleModule } from './module/auth_google/auth_google.module';
+import { TakeMiddleware } from './middleWare/take.middleware';
 dotenv.config();
 
 @Module({
@@ -18,4 +24,10 @@ dotenv.config();
     AuthGoogleModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(TakeMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
