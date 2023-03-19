@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CategoriesEntity } from 'src/entities/categories.entity';
+import { CategoryEntity } from 'src/entities/category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
@@ -10,7 +10,7 @@ export class CategoriesService {
   }
 
   async findAll() {
-    return await CategoriesEntity.find({
+    return await CategoryEntity.find({
       relations: {
         course: true,
       },
