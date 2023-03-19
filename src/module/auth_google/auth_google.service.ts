@@ -2,10 +2,13 @@ import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nes
 import { CreateAuthGoogleDto } from './dto/create-auth_google.dto';
 import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
 import { UsersEntity } from 'src/entities/users.entity';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthGoogleService {
-  constructor(){}
+  constructor(
+    private readonly jwtservice: JwtService
+  ){}
 
 
 
@@ -26,13 +29,15 @@ export class AuthGoogleService {
       throw new HttpException('user already exists', HttpStatus.BAD_REQUEST)
     }
 
-    const createUser = await UsersEntity.createQueryBuilder()
+    const {raw: [raw]} = await UsersEntity.createQueryBuilder()
     .insert()
     .into(UsersEntity)
     .values(userBody)
+    .returning(['*'])
     .execute()
 
-    return req.user
+    console.log(raw);
+    return this.jwtservice.sign({id: raw.id, email: raw.email})
   }
 
   findOne(id: number) {
