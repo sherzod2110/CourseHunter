@@ -61,7 +61,7 @@ export class AuthGoogleService {
       }, {
         secret: process.env.SECRET_KEY
     })
-       //sign data
+    //sign data
   }
 
   async getAdmin(headers: any): Promise<UsersEntity[]>{
@@ -70,14 +70,7 @@ export class AuthGoogleService {
     
     const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password)
     // deleting users passwords
+
     return findAllUser
-  }
-
-  update(id: number, updateAuthGoogleDto: UpdateAuthGoogleDto) {
-    return `This action updates a #${id} authGoogle`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} authGoogle`;
   }
 }

@@ -40,15 +40,4 @@ export class AuthGoogleController {
     return this.authGoogleService.getAdmin(headers)
     // this will be deleted
   }
-
-  
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthGoogleDto: UpdateAuthGoogleDto) {
-    return this.authGoogleService.update(+id, updateAuthGoogleDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authGoogleService.remove(+id);
-  }
 }
