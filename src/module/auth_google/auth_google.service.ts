@@ -64,13 +64,4 @@ export class AuthGoogleService {
     //sign data
   }
 
-  async getAdmin(headers: any): Promise<UsersEntity[]>{
-    this.tokenmiddleware.verifyAdmin(headers)
-    //checking admin token
-    
-    const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password)
-    // deleting users passwords
-
-    return findAllUser
-  }
 }

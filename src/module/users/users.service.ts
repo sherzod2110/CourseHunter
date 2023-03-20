@@ -1,15 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { UsersEntity } from 'src/entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { TokenMiddleware } from 'src/middleWare/token.middleware';
+
+
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
+  constructor(
+    private readonly tokenmiddleware: TokenMiddleware
+  ){}
 
-  findAll() {
-    return `This action returns all users`;
+  async getAdmin(headers: any): Promise<UsersEntity[]>{
+    this.tokenmiddleware.verifyAdmin(headers)
+    //checking admin token
+    
+    const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password)
+    // deleting users passwords
+
+    return findAllUser
   }
 
   findOne(id: number) {
