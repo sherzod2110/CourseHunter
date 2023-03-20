@@ -34,10 +34,4 @@ export class AuthGoogleController {
     return this.authGoogleService.googleLogin(req)
     // login from google account
   }
-
-  @Get('/getUsers')
-  adminGet(@Headers() headers: any){
-    return this.authGoogleService.getAdmin(headers)
-    // this will be deleted
-  }
 }
