@@ -22,10 +22,7 @@ export class GoogleLoginStrategy extends PassportStrategy(Strategy, 'google_logi
             password: profile.id,
             email: emails[0].value,
             firstName: name.givenName,
-        }
-
-        console.log(profile);
-        
+        }    
         done(null, user)
     }
 }

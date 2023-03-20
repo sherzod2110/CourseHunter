@@ -1,8 +1,7 @@
 import { 
   Get,
   Body, 
-  Patch, 
-  Param, 
+  Patch,
   Delete, 
   Headers,
   Controller,

@@ -1,15 +1,9 @@
 import { 
   Controller, 
   UseGuards, 
-  Delete, 
-  Patch, 
-  Param, 
-  Body, 
   Get, 
-  Req, 
-  Headers
+  Req
 } from '@nestjs/common';
-import { UpdateAuthGoogleDto } from './dto/update-auth_google.dto';
 import { AuthGoogleService } from './auth_google.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
@@ -23,7 +17,6 @@ export class AuthGoogleController {
   @Get('/register')
   @UseGuards(AuthGuard('google_register'))
   googleRegisterRedirect(@Req() req: any) {
-    console.log(req.user)
     return this.authGoogleService.googleRegister(req)
     // registration from google account
   }

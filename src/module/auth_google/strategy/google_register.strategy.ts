@@ -22,9 +22,6 @@ export class GoogleRegisterStrategy extends PassportStrategy(Strategy, 'google_r
             email: emails[0].value,
             firstName: name.givenName,
         }
-
-        console.log(profile);
-        
         done(null, user)
     }
 }

@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersEntity } from 'src/entities/users.entity';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { TokenMiddleware } from 'src/middleWare/token.middleware';
 
