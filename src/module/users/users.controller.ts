@@ -15,9 +15,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  
 
-  @Get('/admin/users')
+
+  @Get('/admin/getall')
   findOne(@Headers() headers: any) {
     return this.usersService.getAdmin(headers)
   }

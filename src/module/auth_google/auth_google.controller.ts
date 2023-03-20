@@ -30,7 +30,7 @@ export class AuthGoogleController {
 
   @Get('/login')
   @UseGuards(AuthGuard('google_login'))
-  googleLoginRedirect(@Req() req:any){
+  googleLoginRedirect(@Req() req: any){
     return this.authGoogleService.googleLogin(req)
     // login from google account
   }

@@ -12,8 +12,8 @@ export class UsersService {
     private readonly tokenmiddleware: TokenMiddleware
   ){}
 
-  async getAdmin(headers: any): Promise<UsersEntity[]>{
-    this.tokenmiddleware.verifyAdmin(headers)
+  async getAdmin(headers: any): Promise<UsersEntity[] | string>{
+    await this.tokenmiddleware.verifyAdmin(headers)
     //checking admin token
     
     const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password)
