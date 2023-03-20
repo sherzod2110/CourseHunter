@@ -41,9 +41,9 @@ export class UsersController {
     return this.usersService.getAdmin(headers)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch('/update')
+  update(@Headers() headers: any, @Body() body: UpdateUserDto) {
+    return this.usersService.update(headers, body);
   }
 
 
