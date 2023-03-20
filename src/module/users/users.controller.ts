@@ -41,6 +41,13 @@ export class UsersController {
     return this.usersService.getAdmin(headers)
   }
 
+  @ApiHeader({
+    name: "authorization",
+    description: "User token",
+    required: true
+  })
+  @ApiBadRequestResponse()
+  @HttpCode(HttpStatus.OK)
   @Patch('/update')
   update(@Headers() headers: any, @Body() body: UpdateUserDto) {
     return this.usersService.update(headers, body);
