@@ -1,6 +1,5 @@
 import { 
-  Get, 
-  Post, 
+  Get,
   Body, 
   Patch, 
   Param, 
@@ -15,7 +14,8 @@ import {
   ApiOkResponse,
   ApiNotFoundResponse, 
   ApiBadRequestResponse,
-  ApiTags, 
+  ApiTags,
+  ApiNoContentResponse, 
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -23,7 +23,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+      private readonly usersService: UsersService
+    ) {}
 
   @Get('/admin/getall')
   @ApiHeader({
@@ -44,8 +46,17 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+
+  @ApiHeader({
+    name: "authorization",
+    description: "User token",
+    required: true
+  })
+  @ApiNotFoundResponse()
+  @ApiNoContentResponse()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete('/delete')
+  deleteUser(@Headers() headers: any){
+    return this.usersService.deleteUser(headers)
   }
 }
