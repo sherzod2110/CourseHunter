@@ -6,12 +6,7 @@ export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
     @IsNotEmpty()
     @IsOptional()
     cat_title: string;
-  
-    @IsString()
-    @IsNotEmpty()
-    @IsOptional()
-    cat_image: string;
-  
+    
     @IsString()
     @IsNotEmpty()
     @IsOptional()
