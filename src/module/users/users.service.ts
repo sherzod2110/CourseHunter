@@ -12,14 +12,14 @@ export class UsersService {
     private readonly tokenmiddleware: TokenMiddleware
   ){}
 
-  async getAdmin(headers: any): Promise<UsersEntity[] | string>{
+  async getAdmin(headers: any): Promise<UsersEntity[] | any[]>{
     await this.tokenmiddleware.verifyAdmin(headers)
     //checking admin token
     
-    const findAllUser: any[] = (await UsersEntity.find()).filter(e => delete e.password)
-    // deleting users passwords
+    const getAllUsers: UsersEntity[] | any[] = (await UsersEntity.find()).filter(e => delete e.password)
+    // deleting users  passwords
 
-    return findAllUser
+    return getAllUsers
   }
 
   findOne(id: number) {
