@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
-export class CreateCategoryDto {
+export class CreateCourseDto {
   @IsString()
   @IsNotEmpty()
   title: string;
@@ -16,5 +16,7 @@ export class CreateCategoryDto {
   @IsNotEmpty()
   description: string;
 
-
+  @IsString()
+  @IsNotEmpty()
+  course_cat: string;
 }

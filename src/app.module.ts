@@ -14,6 +14,7 @@ import { CategoriesModule } from './module/categories/categories.module';
 import { AuthGoogleModule } from './module/auth_google/auth_google.module';
 import { TakeMiddleware } from './middleWare/take.middleware';
 import { HistoryModule } from './module/history/history.module';
+import { CourseModule } from './module/course/course.module';
 dotenv.config();
 
 @Module({
@@ -24,6 +25,7 @@ dotenv.config();
     CategoriesModule,
     AuthGoogleModule,
     HistoryModule,
+    CourseModule,
   ],
 })
 export class AppModule implements NestModule {

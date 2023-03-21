@@ -1,6 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBadRequestResponse, ApiBody, ApiConsumes, ApiHeader } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiConsumes,
+  ApiHeader,
+} from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -14,7 +31,7 @@ export class CategoriesController {
   @ApiHeader({
     name: 'admin_token',
     description: 'Admin token',
-    required: true
+    required: true,
   })
   @ApiBody({
     schema: {
@@ -31,19 +48,18 @@ export class CategoriesController {
         cat_description: {
           type: 'string',
         },
-      }
-    }
+      },
+    },
   })
   @ApiConsumes('multipart/form-data')
   @ApiBadRequestResponse()
   @UseInterceptors(FileInterceptor('categories'))
   async uploadfile(
-    // @UploadedFile() file: Express.Multer.File,
-    @Body() createCategoryDto: CreateCategoryDto
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createCategoryDto: CreateCategoryDto,
   ) {
     return this.categoriesService.create(createCategoryDto);
   }
-
   @Get('list')
   findAll() {
     return this.categoriesService.findAll();
@@ -55,7 +71,10 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
     return this.categoriesService.update(+id, updateCategoryDto);
   }
 

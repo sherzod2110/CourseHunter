@@ -12,13 +12,13 @@ async function bootstrap() {
 
   app.enableCors();
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe());    
   app.useGlobalFilters(new ErrorHandle());
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix('v1'); 
 
   const config = app.get(ConfigService);
   const port = config.getOrThrow('app.port');
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);    
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
