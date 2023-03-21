@@ -1,6 +1,7 @@
 import { JwtService } from '@nestjs/jwt';
 import { UsersEntity } from 'src/entities/users.entity';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import jwt from 'src/utils/jwt';
 
 @Injectable()
 export class AuthGoogleService {
@@ -37,14 +38,18 @@ export class AuthGoogleService {
     // creating new User
 
 
-    return this.jwtservice.sign(
-      {
-        id: raw.id, 
-        email: raw.email
-      }, 
-      {
-      secret: process.env.SECRET_KEY
-      })
+    // return this.jwtservice.sign(
+    //   {
+    //     id: raw.id, 
+    //     email: raw.email
+    //   }, 
+    //   {
+    //   secret: process.env.SECRET_KEY
+    //   })
+    return jwt.sign({
+      id: raw.id, 
+      email: raw.email
+    })
   }
 
   async googleLogin(req: any): Promise<string | any>{
@@ -62,13 +67,17 @@ export class AuthGoogleService {
       throw new HttpException('user not found', HttpStatus.BAD_REQUEST)
     }
 
-    return this.jwtservice.sign(
-      {
-        id: findUser.id, 
-        email: findUser.email
-      }, 
-      {
-        secret: process.env.SECRET_KEY
-      })
+    // return this.jwtservice.sign(
+    //   {
+    //     id: findUser.id, 
+    //     email: findUser.email
+    //   }, 
+    //   {
+    //     secret: process.env.SECRET_KEY
+    // })
+    return jwt.sign({
+      id: findUser.id, 
+      email: findUser.email
+    })
   }
 }
