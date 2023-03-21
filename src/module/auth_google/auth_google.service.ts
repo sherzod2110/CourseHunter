@@ -5,9 +5,7 @@ import jwt from 'src/utils/jwt';
 
 @Injectable()
 export class AuthGoogleService {
-  constructor(
-    private readonly jwtservice: JwtService, //jwt service
-  ){}
+  constructor(){}
 
 
   async googleRegister(req:any): Promise<string| any> {
@@ -37,15 +35,6 @@ export class AuthGoogleService {
     })
     // creating new User
 
-
-    // return this.jwtservice.sign(
-    //   {
-    //     id: raw.id, 
-    //     email: raw.email
-    //   }, 
-    //   {
-    //   secret: process.env.SECRET_KEY
-    //   })
     return jwt.sign({
       id: raw.id, 
       email: raw.email
@@ -67,14 +56,6 @@ export class AuthGoogleService {
       throw new HttpException('user not found', HttpStatus.BAD_REQUEST)
     }
 
-    // return this.jwtservice.sign(
-    //   {
-    //     id: findUser.id, 
-    //     email: findUser.email
-    //   }, 
-    //   {
-    //     secret: process.env.SECRET_KEY
-    // })
     return jwt.sign({
       id: findUser.id, 
       email: findUser.email
