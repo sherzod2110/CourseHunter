@@ -1,3 +1,4 @@
+import { CreateCourseDto } from './dto/create-course.dto';
 import { GetTaskFilterDto } from './dto/get-search-filter';
 import { CoursesEntity } from './../../entities/courses.entity';
 import { googleCloud } from './../../utils/google-cloud';
@@ -13,14 +14,12 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  HttpException,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
-import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import {
   ApiBadRequestResponse,
-  ApiBody,
-  ApiConsumes,
   ApiCreatedResponse,
   ApiHeader,
   ApiNoContentResponse,
@@ -64,14 +63,30 @@ export class CourseController {
   @ApiBadRequestResponse()
   @ApiNotFoundResponse()
   @ApiOkResponse()
-  findAll(@Query() filterDto: GetTaskFilterDto): Promise<CoursesEntity[]> {
+  findAll() {
     return this.courseService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(cat_id) {
-  //   return this.courseService.byCategory();
-  // }
+  @Get('/bycategory/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
+  @ApiOkResponse()
+  findOne(@Param('id') cat_id: string) {
+    return this.courseService.byCategory(cat_id);
+  }
+
+  @Get('/search')
+  @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
+  @ApiOkResponse()
+  findByTitle(@Query() filter: GetTaskFilterDto) {
+    if (Object.keys(filter).length) {
+      return this.courseService.searchTitle(filter);
+    } else {
+      return this.courseService.findAll();
+    }
+  }
 
   @Patch('/update/:id')
   @HttpCode(HttpStatus.NO_CONTENT)

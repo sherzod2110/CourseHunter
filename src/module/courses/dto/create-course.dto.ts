@@ -18,5 +18,5 @@ export class CreateCourseDto {
 
   @IsString()
   @IsNotEmpty()
-  course_cat: string;
+  categories_id: string;
 }

@@ -11,11 +11,6 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
     @IsString()
     @IsNotEmpty()
     @IsOptional()
-    image: string;
-  
-    @IsString()
-    @IsNotEmpty()
-    @IsOptional()
     lang: string;
 
     @IsString()
@@ -26,5 +21,5 @@ export class UpdateCourseDto extends PartialType(CreateCourseDto) {
     @IsString()
     @IsNotEmpty()
     @IsOptional()
-    course_cat: string;
+    categories_id: string;
 }

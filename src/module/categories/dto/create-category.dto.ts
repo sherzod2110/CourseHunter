@@ -10,11 +10,5 @@ export class CreateCategoryDto {
 
   @IsString()
   @IsNotEmpty()
-  lang: string;
-
-  @IsString()
-  @IsNotEmpty()
   description: string;
-
-
 }

@@ -62,8 +62,6 @@ export class TakeMiddleware implements NestMiddleware {
           id,
         })
         .execute();
-    } else {
-      console.log(result, today);
     }
   }
 

@@ -47,6 +47,9 @@ export class CoursesEntity extends BaseEntity {
   })
   description: string;
 
+  @Column('uuid')
+  categories_id: any
+
   @ManyToOne(() => CategoryEntity, (category) => category.course, {
     onDelete: 'CASCADE',
   })

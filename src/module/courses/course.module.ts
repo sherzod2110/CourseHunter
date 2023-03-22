@@ -5,7 +5,6 @@ import { CourseController } from './course.controller';
 
 @Module({
   controllers: [CourseController],
-  providers: [CourseService, TokenMiddleware]
+  providers: [CourseService, TokenMiddleware],
 })
 export class CourseModule {}
- 

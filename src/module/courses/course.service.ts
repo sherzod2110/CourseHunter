@@ -1,13 +1,36 @@
 import { GetTaskFilterDto } from './dto/get-search-filter';
 import { CoursesEntity } from './../../entities/courses.entity';
-import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
+import {
+  Injectable,
+  HttpStatus,
+  HttpException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Injectable()
 export class CourseService {
-  async byCategory() {
-    return await CoursesEntity.find()
+  async byCategory(cat_id: string) {
+    const corse = await CoursesEntity.find();
+    const foundCourseCategory = corse.filter((e) => {
+      return e.categories_id == cat_id;
+    });
+    if (!foundCourseCategory) {
+      throw new NotFoundException();
+    }
+    return foundCourseCategory;
+  }
+
+  async searchTitle(filter: GetTaskFilterDto) {
+    const { search } = filter;
+    const title = search.toLowerCase();
+    let tasks: any = this.findAll();
+
+    if (title) {
+      tasks = (await tasks).filter((task: any) => task.title.includes(title));
+    }
+    return tasks;
   }
 
   async findAll() {
@@ -15,20 +38,6 @@ export class CourseService {
       throw new HttpException('BAD GATEWAY', HttpStatus.BAD_GATEWAY);
     });
   }
-
-  // getTaskWithFilter(filterDto: GetTaskFilterDto): any {
-  //   const { search } = filterDto;
-
-  //   let tasks: any = this.findAll();
-
-  //   if (search) {
-  //     tasks = tasks.filter((task) => 
-  //       task.title.includes(search)
-  //     );
-  //   }
-
-  //   return tasks;
-  // }
 
   async create(createCourseDto: CreateCourseDto, imgLink: any) {
     await CoursesEntity.createQueryBuilder()
@@ -39,6 +48,7 @@ export class CourseService {
         image: imgLink,
         lang: createCourseDto.lang,
         description: createCourseDto.description,
+        categories_id: createCourseDto.categories_id as any,
       })
       .execute()
       .catch(() => {
@@ -63,6 +73,7 @@ export class CourseService {
         image: imgLink || course.image,
         lang: updateCourseDto.lang || course.lang,
         description: updateCourseDto.description || course.description,
+        categories_id: updateCourseDto.categories_id || course.categories_id,
       })
       .where({
         id: id,
@@ -90,8 +101,7 @@ export class CourseService {
         id: id,
       })
       .execute()
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         throw new HttpException('Bad Request', HttpStatus.BAD_REQUEST);
       });
   }
