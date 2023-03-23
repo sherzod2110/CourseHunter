@@ -70,7 +70,7 @@ export class CourseService {
       .update()
       .set({
         title: updateCourseDto.title || course.title,
-        image: imgLink || course.image,
+        image: imgLink,
         lang: updateCourseDto.lang || course.lang,
         description: updateCourseDto.description || course.description,
         categories_id: updateCourseDto.categories_id || course.categories_id,
